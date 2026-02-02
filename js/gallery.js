@@ -66,9 +66,7 @@ const images = [
 
 const galleryList = document.querySelector('.gallery');
 
-galleryList.addEventListener('click', event => {
-  event.preventDefault();
-});
+galleryList.addEventListener('click', onImageClick);
 
 const markup = images
   .map(image => {
@@ -87,3 +85,15 @@ const markup = images
   .join('');
 
 galleryList.insertAdjacentHTML('beforeend', markup);
+
+function onImageClick(event) {
+  if (!event.target.classList.contains('gallery-image')) {
+    return;
+  }
+  event.preventDefault();
+  const selectedImg = event.target.dataset.source;
+  console.log('🚀 ~ onImageClick ~ selectedImg:', selectedImg);
+  basicLightbox
+    .create(`<img src="${selectedImg}" alt="${event.target.alt}">`)
+    .show();
+}
